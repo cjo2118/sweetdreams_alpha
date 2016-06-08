@@ -1,0 +1,86 @@
+html,body{
+	width: 300px;
+	height: 170px;
+/*	background-color: #8DA1DE;*/
+	background-color: black;
+/*	background-color: #000033;
+*/	font-family: 'Crafty Girls', cursive;
+	margin: 0px;
+	padding: 0px;
+}
+
+h1{
+/*	color: #CBDEFE;
+*/	
+	text-align: center;
+	color: #FFFFFF;
+}
+
+
+
+#star{
+	color: #fffeb7;
+}
+
+#outer-left{
+	margin-top: -40px;
+	margin-left: 25px;
+}
+
+#inner-left{
+	margin-top: -25px;
+	margin-left: 45px;
+	font-size: 16px;
+}
+
+#inner-right{
+	margin-top: -20px;
+	margin-left: 240px;
+	font-size: 16px;
+
+}
+
+#outer-right{
+	margin-top: -10px;
+	margin-left: 260px;
+}
+
+.filter{
+	background-color: red;
+	color: red;
+}
+
+form{
+	margin-left: -230px;
+	margin-top: 40px;
+}
+
+input[type="submit"]{
+	background-color: #CC3366;
+	color: #ffe6e6;
+	border: 0;
+	width: 80px;
+	margin-left: 80px;
+	margin-top: 15px;
+}
+
+input[type="submit"]:hover{
+	background-color: #993366;
+	outline: 2px solid #990066;
+}
+
+input[type="text"]{
+	width: 100px;
+	margin-left: 65px;
+	outline: none;
+	background-color: #CCFFFF;
+}
+
+#filter-cloud{
+	width: 100%;
+	height: 40px;
+	color: white;
+	margin-top: 15px;
+	margin-bottom: 15px;
+	overflow: auto;
+}
