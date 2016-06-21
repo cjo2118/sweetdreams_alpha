@@ -1,5 +1,10 @@
 # sweetdreams_alpha
 Chrome extension that allows users to add filters to their twitter feed
+-----------------------------------------------------------------------------------------------------------------------------------------
+After seeing so many debates about the use of trigger warnings, I wanted to provide an alternative solution 
+for people who want to filter out certain content on their social media pages. 
+This version is a proof of concept for twitter, since twitter doesn't allow users to hide posts without unfollowing. 
+-----------------------------------------------------------------------------------------------------------------------------------------
 
 Here is a demo of the extension:
 
@@ -8,3 +13,4 @@ Here is a demo of the extension:
 
 
 **2. Remove filters by clicking them in the popup**
+
