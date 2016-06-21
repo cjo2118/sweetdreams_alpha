@@ -12,6 +12,8 @@ Here is a demo of the extension:
 ![alt tag](https://github.com/cjo2118/sweetdreams_alpha/blob/master/sweetdreams_demo.png)
 
 
-**2. Remove filters by clicking them in the popup**
+**2. Tweets containing filtered words are hidden**
 
 ![alt tag](https://github.com/cjo2118/sweetdreams_alpha/blob/master/hidden_tweets.png)
+
+**3. Remove filters by clicking them in the popup**
