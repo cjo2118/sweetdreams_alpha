@@ -12,7 +12,7 @@ Node.TEXT_NODE = 3;
 	console.log("loaded script.js");
 	walkWithFilter();
 	var tweets = document.getElementsByClassName("js-tweet-text-container");
-	$(".js-tweet-text-container").parent().parent().append($('<div class="sweet-message">Hidden by Sweet Dreams. </div>'));
+	$(".js-tweet-text-container").parent().parent().append($('<div class="sweet-message">Hidden by Sweet Dreams. xoxo </div>'));
 	$(".sweet-message").css("font-family", "'Crafty Girls', cursive");
 	$(".sweet-message").hide();
 	
@@ -21,17 +21,18 @@ Node.TEXT_NODE = 3;
 
 
 chrome.runtime.onMessage.addListener(
-  function(request, sender, sendResponse) {
+function(request, sender, sendResponse) {
     console.log(sender.tab ?
                 "from a content script:" + sender.tab.url :
                 "from the extension");
-    if (request.greeting == "new filter saved") {
-    	walkWithFilter();
-    	return true;
-       sendResponse({farewell: "goodbye"});
-  	}
-  	return false;
-  });
+        	walkWithFilter();		
+
+
+    console.log("received message from popup: "+request.greeting);
+
+    sendResponse({farewell: "I'm good, thank you popup!"});
+});
+
 
 function walkWithFilter(){
 	chrome.storage.sync.get('myFilter', function(e){
@@ -44,6 +45,22 @@ function walkWithFilter(){
 
 	
 }
+
+//content script
+var clickedEl = null;
+
+document.addEventListener("mousedown", function(event){
+    //right click
+    if(event.button == 2) { 
+        clickedEl = event.target;
+    }
+}, true);
+
+chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
+    if(request == "getClickedEl") {
+        sendResponse({value: clickedEl.value});
+    }
+});
 
 // window.onload = function() {
 // 	document.getElementById("save-button").onclick = function(){

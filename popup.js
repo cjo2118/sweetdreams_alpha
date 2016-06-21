@@ -6,6 +6,9 @@ console.log("loaded popup");
 // }
 
 
+
+
+
  window.onload = function () {
  	chrome.storage.sync.get('myFilter', function(e){
 			var filter = e.myFilter; 
@@ -35,6 +38,7 @@ console.log("loaded popup");
 
 		
 		});
+
 	document.getElementById("save-button").onclick = function(){
 		console.log("added click function");
 		var value = document.getElementById('new-filter').value;
@@ -59,20 +63,35 @@ console.log("loaded popup");
 
 			document.getElementById('filter-cloud').innerHTML = filterCloud.join("");
 **/
+			/* when something is saved in local storage... */
 			chrome.storage.sync.set({'myFilter': filter}, function(){
-				alert("Success!");
-				chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
-				  chrome.tabs.sendMessage(tabs[0].id, {greeting: "new filter saved"}, function(response) {
-				    console.log(response.farewell);
 
-				  });
-				});
-		});
-		
+				
+				// chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
+				//   chrome.tabs.sendMessage(tabs[0].id, {greeting: "new filter saved"}, function(response) {
+				//     console.log(response.farewell);
+
+				//   });
+				// });
+
+			});
 
 		});
+		chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
+				        if(tabs.length == 0){ 
+				            console.log("could not send mesage to current tab");
+				        }else{
+				            chrome.tabs.sendMessage(tabs[0].id, {greeting: "hello, how are you content script?"}, function(response) {
+				                console.log("received message from content script: "+response.farewell);
+				            });
+				        }
+				    });
+
 		}
+
+		  
 	}
+
 }
 
 
