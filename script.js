@@ -5,17 +5,33 @@ Node.DOCUMENT_NODE = 9;
 Node.DOCUMENT_FRAGMENT_NODE = 11;
 Node.TEXT_NODE = 3;
 
+//adding facebook -- not done yet
+var url = window.location.href; 
+var twitter;
+var facebook;
 
+if(url.indexOf("twitter.com")!= -1){
+	twitter = true;
+}
+else if(url.indexOf("facebook.com") != -1){
+	facebook = true;
+}
 
  window.onload = function() {
 
 	console.log("loaded script.js");
 	walkWithFilter();
-	var tweets = document.getElementsByClassName("js-tweet-text-container");
+	if(twitter === true){
+		var tweets = document.getElementsByClassName("js-tweet-text-container");
+	}
+	else if (facebook === true){
+		var tweets = document.getElementsByClassName("_3ccb");
+
+	}
 	$(".js-tweet-text-container").parent().parent().append($('<div class="sweet-message">Hidden by Sweet Dreams. xoxo </div>'));
 	$(".sweet-message").css("font-family", "'Crafty Girls', cursive");
 	$(".sweet-message").hide();
-	
+
  }
 
 
@@ -46,7 +62,7 @@ function walkWithFilter(){
 	
 }
 
-//content script
+/* get clicked element from context menu not working yet */
 var clickedEl = null;
 
 document.addEventListener("mousedown", function(event){
@@ -62,36 +78,7 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
     }
 });
 
-// window.onload = function() {
-// 	document.getElementById("save-button").onclick = function(){
-// 	var value = document.getElementById('new-filter').value;
-
-// 		chrome.storage.sync.set({'myFilter': value}, function(){
-// 			alert("Success!");
-// 			walkWithFilter();
-// 		});
-
-// 		chrome.storage.sync.get('myFilter', function(e){
-// 			var word = e.myFilter;
-// 			console.log(word);
-// 			if(word !== null){
-// 				walk(document.body, word);
-// 			}
-// 		}); 
-// 	}
-
-// 	walkWithFilter();
-// }
-
-
-// Enter things that you'd like to replace
-
-
-// var MATCH = $('#new-filter').val(); 
-
-//walk(document.body);
-
-
+/* Walk through the DOM and change css of posts with filtered words */
 function new_walk(node) {
 	var tweets = document.getElementsByClassName("js-tweet-text-container");
 	for (var tweet in tweets) {
@@ -101,8 +88,6 @@ function new_walk(node) {
 	$(".filter").parent().css("background-color", "black");
 	$(".filter").parent().css("color", "white");
 
-
-
 	$(".js-tweet-text-container").each(function (obj) {
 		if ($(this).parent().hasClass("filter")) { console.log("showing a message"); $(this).parent().parent().find(".sweet-message").show(); }
 		else {console.log("hiding a message"); $(this).parent().parent().find(".sweet-message").hide();  }
@@ -111,7 +96,7 @@ function new_walk(node) {
 }
 
 
-
+/* add class 'filter' to posts with banned words */
 function new_hide(tweet) {
     var text = tweet.innerText;
     if (text !== undefined) {
@@ -130,90 +115,28 @@ function new_hide(tweet) {
 }
 
 
-function walk(node) {
+// function walk(node) {
 	
-    var child, next;
-console.log("value of filter in walk "+ filter);
-    switch (node.nodeType) {
-        case Node.ELEMENT_NODE:  // Element
-        case Node.DOCUMENT_NODE:  // Document
-        case Node.DOCUMENT_FRAGMENT_NODE: // Document fragment
-            child = node.firstChild;
-            while (child) {
-                next = child.nextSibling;
-             //  walk(child);
-             //  console.log("children, child:", child, "next:",  next);
-                child = next;
-            }
-            break;
+//     var child, next;
+// console.log("value of filter in walk "+ filter);
+//     switch (node.nodeType) {
+//         case Node.ELEMENT_NODE:  // Element
+//         case Node.DOCUMENT_NODE:  // Document
+//         case Node.DOCUMENT_FRAGMENT_NODE: // Document fragment
+//             child = node.firstChild;
+//             while (child) {
+//                 next = child.nextSibling;
+//              //  walk(child);
+//              //  console.log("children, child:", child, "next:",  next);
+//                 child = next;
+//             }
+//             break;
 
-        case Node.TEXT_NODE: // Text node
-           hide(node);
-            break;
-    }
-}
-
-
-function bad_walk(node, filter) {
-	// Function from here for replacing text: http://is.gd/mwZp7E
-	console.log("value of filter in walk "+ filter + " node: " + node);
-	var child, next;
-	if(node !== null && filter !== undefined) {
-
-		switch (node.nodeType) {
-			case Node.ELEMENT_NODE:  // Element
-			case Node.DOCUMENT_NODE:  // Document
-			case Node.DOCUMENT_FRAGMENT_NODE: // Document fragment
-				child = node.firstChild;
-				
-			
-			while (child) {
-				next = child.nextSibling;
-				walk(child, filter);
-				child = next;
-			}
-
-			break;
-
-			case Node.TEXT_NODE: // Text node
-			hide(node, filter);
-			break;
-	}
-	}//if statement
-}
-
-
-// function replaceText(textNode) {
-// 	var v = textNode.nodeValue;
-
-// 	// Go through and match/replace all the strings we've given it, using RegExp.
-// 	for (var i = 0; i < MATCH.length; i++) {
-		
-
-// 		v = v.replace(new RegExp('\\b' + MATCH[i] + '\\b', 'g'), REPLACE[i]);
-// 	}
-
-// 	textNode.nodeValue = v;
+//         case Node.TEXT_NODE: // Text node
+//            hide(node);
+//             break;
+//     }
 // }
-
-// function hide(textNode) {
-// 	var element = document.createElement(textNode.tagName);
-// 	var content = element.innerHTML;
-// 	alert(content);
-// 	var cName = 'filter'
-// 	var badWord = textNode.nodeValue;
-// 	var replaceWord = "";
-// 	textNode.nodeValue.className = cName;
-
-// 	//Go through and match/replace strings equal to MATCH
-// 	for (var i=0; i< MATCH.length; i++) {
-// 		// badWord.className("filter");
-// 		replaceWord = document.getElementsByClassName(cName).innerHTML;
-// 		replaceWord = replaceWord.replace(new RegExp('\\b' + MATCH[i] + '\\b', 'g'), REPLACE[i]);
-// 	}
-// 	textNode = replaceWord;
-// }
-
 
 
 function hide(textNode) {
@@ -245,3 +168,11 @@ function hide(textNode) {
     }
     textNode.nodeValue = nodeValue;
 }
+
+/* This didn't work - try livequery instead*/
+// document.getElementsByClassName(".new-tweets-bar").addEventListener("click", function(){
+// 	walkWithFilter();
+// 	console.log("new tweets bar!");
+// });
+		
+	

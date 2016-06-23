@@ -1,14 +1,5 @@
 console.log("loaded popup");
 
-
-// document.getElementById('save-button').onclick = function(){
-// 	console.log("I clicked the save button");
-// }
-
-
-
-
-
  window.onload = function () {
  	chrome.storage.sync.get('myFilter', function(e){
 			var filter = e.myFilter; 
@@ -33,7 +24,19 @@ console.log("loaded popup");
 				cloud[f].onclick = function () { 
 					console.log("removing " + this.innerHTML); 
 					remove(this.innerHTML); 
-				}
+
+					/* pass message to script to run walkWithFilter*/
+				chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
+				        if(tabs.length == 0){ 
+				            console.log("could not send mesage to current tab");
+				        }else{
+				            chrome.tabs.sendMessage(tabs[0].id, {greeting: "hello, how are you content script?"}, function(response) {
+				                console.log("received message from content script: "+response.farewell);
+				            });
+				        }
+				    });
+
+				}//ends onclick 
 			}
 
 		
@@ -89,7 +92,7 @@ console.log("loaded popup");
 
 		}
 
-		  
+
 	}
 
 }

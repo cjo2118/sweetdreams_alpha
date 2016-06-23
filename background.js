@@ -1,20 +1,3 @@
-//  window.onload = function() {
-//  	//CONTEXT MENU this should go somewhere else, but we'll need to resolve onload conflict
-//  	alert("Background script loaded");
-// 	chrome.contextMenus.create({
-// 		id: "custom-context-a",
-// 		title: "Hide Tweet",
-// 		contexts: ["launcher", "all"],
-// 	}, function(){
-// 		console.log(chrome.runtime.lastError);
-// 	});
-
-// 	chrome.contextMenus.onClicked.addListener(contextClicked.bind(this));
-// };
-
-// function contextClicked(e){
-// 	console.log(e.menuItemId);
-// }
 
 /*listen for message from popup, send message to content script */
 chrome.runtime.onMessage.addListener(
